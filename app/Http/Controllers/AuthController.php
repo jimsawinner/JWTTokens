@@ -48,7 +48,7 @@ class AuthController extends Controller
         $subject = "Please verify your email address.";
         Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
             function($mail) use ($email, $name, $subject){
-                $mail->from(getenv('FROM_EMAIL_ADDRESS'), "From User/Company Name Goes Here");
+                $mail->from(getenv('FROM_EMAIL_ADDRESS'), "inticket@edflabs.net");
                 $mail->to($email, $name);
                 $mail->subject($subject);
             });
@@ -72,7 +72,10 @@ class AuthController extends Controller
                     'message'=> 'Account already verified..'
                 ]);
             }
-            $user->update(['is_verified' => 1]);
+            // $user->update(['is_verified' => 1]);
+            $user->is_verified = 1;
+            $user->update();
+            // $user->save();
             DB::table('user_verifications')->where('token',$verification_code)->delete();
             return response()->json([
                 'success'=> true,
