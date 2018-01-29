@@ -27,3 +27,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
         return response()->json(['foo'=>'bar']);
     });
 });
+
+Route::group(['middleware' => ['jwt.auth']], function() {
+    Route::post('refresh', 'AuthController@refresh');
+});

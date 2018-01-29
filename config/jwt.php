@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'ttl' => 60,
+    'ttl' => 1,
 
     /*
     |--------------------------------------------------------------------------
@@ -111,6 +111,7 @@ return [
     */
 
     'blacklist_enabled' => env('JWT_BLACKLIST_ENABLED', true),
+    // 'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 10),
 
     /*
     |--------------------------------------------------------------------------

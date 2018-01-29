@@ -122,6 +122,42 @@ class AuthController extends Controller
     }
 
     /**
+     * API Refresh, will refresh a JWT Token
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh(Request $request)
+    {
+        $prevToken = JWTAuth::getToken();
+
+        if(!$prevToken){
+            throw new BadRequestHtttpException('Token not provided');
+        }
+        try{
+            $token = JWTAuth::refresh($prevToken);
+        }catch(TokenInvalidException $e){
+            throw new AccessDeniedHttpException('The token is invalid');
+        }
+        // return $this->response->withArray(['token'=>$token]);
+
+        // all good so return the token
+        return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
+
+        // try {
+        //     // attempt to verify the credentials and create a token for the user
+        //     if (! $token = JWTAuth::refresh($prevToken)) {
+        //         return response()->json(['success' => false, 'error' => 'Could not refresh the token.'], 401);
+        //     }
+        // } catch (JWTException $e) {
+        //     // something went wrong whilst attempting to encode the token
+        //     return response()->json(['success' => false, 'error' => 'could_not_create_token'], 500);
+        // }
+
+
+    }
+
+    /**
      * Log out
      * Invalidate the token, so user cannot use it anymore
      * They have to relogin to get a new token
