@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/decoder', function() {
+    return view('decoder');
+});
+
 Route::get('user/verify/{verification_code}', 'AuthController@verifyUser');
 Route::get('password/reset', 'Auth\ForgotPasswordController@showResetForm');
 Route::get('password/reset/{token?}', 'Auth\ResetPasswordController@showResetForm');
